@@ -1,3 +1,4 @@
+import { TaskRequest, TaskStatus } from '@/types/task';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api';
@@ -14,7 +15,18 @@ export const getTasks = async () => {
   return response.data;
 };
 
-export const createTask = async (task: { title: string; description: string }) => {
+export const createTask = async (task: TaskRequest) => {
   const response = await apiClient.post('/tasks', task);
+  return response.data;
+};
+
+export const updateTask = async (id: number, status: TaskStatus) => {
+  const response = await apiClient.put(`/tasks/${id}`, { status });
+  return response.data;
+};
+
+export const deleteTask = async (id: number) => {
+  console.log(id);
+  const response = await apiClient.delete(`/tasks/${id}`);
   return response.data;
 };

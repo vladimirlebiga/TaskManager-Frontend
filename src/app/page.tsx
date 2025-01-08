@@ -1,17 +1,13 @@
-'use client'
+import HomePage from '@/pages/homepage/HomePage'
+import React from 'react'
 
-import Image from "next/image";
-
-export default function Home() {
+ const page = () => {
   return (
-    
-      <div>
-        <h2>Welcome to the Task Manager!</h2>
-        <p>
-          Use the navigation to view your tasks or create a new one.
-        </p>
-      </div>
-  
-   
-  );
+    <HomePage/>
+  )
 }
+
+export default page;
+
+
+

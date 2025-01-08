@@ -1,11 +1,12 @@
+import Header from "@/components/header/Header";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <header style={{ padding: '20px', backgroundColor: '#f4f4f4' }}>
-          <h1>Task Manager</h1>
-        </header>
+        <Header/>
         <main style={{ padding: '20px' }}>{children}</main>
+        <footer>Copyright 2025</footer>
       </body>
     </html>
   );
