@@ -9,6 +9,7 @@ RESET = 'reset',
 type ButtonProps = {
     id: keyof typeof buttonConfig;
     onClick?: () => void;
+    isDisabled?: boolean;
 };
 
 const buttonConfig = {
@@ -30,25 +31,33 @@ const buttonConfig = {
         type: ButtonTypes.BUTTON,
         },
     
-        done: {
-            title: 'Done',
-            className: 'bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700',
-            type: ButtonTypes.BUTTON,
-         },
+    done: {
+        title: 'Done',
+        className: 'bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700',
+        type: ButtonTypes.BUTTON,
+        },
 
-         inProgress: {
-            title: 'In Progress',
-            className: 'bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700',
-            type: ButtonTypes.BUTTON,
-         },
+    inProgress: {
+        title: 'In Progress',
+        className: 'bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-700',
+        type: ButtonTypes.BUTTON,
+        },
+
+    todo: {
+        title: 'ToDo',
+        className: 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-green-700',
+        type: ButtonTypes.BUTTON,
+    }
+    
         
     }
 
-        export const Button: React.FC<ButtonProps> = ({ id, onClick }) => {
+        export const Button: React.FC<ButtonProps> = ({ id, onClick, isDisabled }) => {
             const { title, className, type } = buttonConfig[id];
 
+
   return (
-    <button onClick={onClick} className={className} type={type}>{title}</button>
+    <button disabled={isDisabled} onClick={onClick} className={className} type={type}>{title}</button>
   )
 }
 

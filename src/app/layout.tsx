@@ -1,12 +1,16 @@
 import Header from "@/components/header/Header";
+import StoreProvider from "@/store/storeProvider";
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <StoreProvider>
         <Header/>
         <main style={{ padding: '20px' }}>{children}</main>
         <footer>Copyright 2025</footer>
+        </StoreProvider>
       </body>
     </html>
   );

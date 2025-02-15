@@ -1,26 +1,30 @@
 'use client';
 
 import React from 'react';
-import { createTask } from "@/services/api";
 import { useState } from "react";
 import { TaskStatus } from '@/types/task';
 import { Button } from '@/components/button/Button';
+import { fetchCreateTask } from '@/store/slice/taskSliceReducer';
+import { useAppDispatch } from '@/store/store';
+import { useRouter } from 'next/navigation';
 
 const CreatePage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState<TaskStatus>(TaskStatus.TODO);
 
-
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (title && description) {
-      await createTask({ title, description, status });
+      await dispatch(fetchCreateTask({ title, description, status }));
       alert('Task created successfully!');
       setTitle('');
       setDescription('');
       setStatus(TaskStatus.TODO);
+      router.push('/')
     } else {
       alert('Please fill in all fields');
     }

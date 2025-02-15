@@ -1,28 +1,32 @@
 'use client';
 
-import React from 'react';
-import TaskList from "@/components/taskList/TaskList";
-import { getTasks } from "@/services/api";
-import { Task } from "@/types/task";
-import { useEffect, useState } from "react";
+import React, { useEffect }  from 'react';
+import TaskList from '@/components/taskList/TaskList';
+import { fetchTasks } from '@/store/slice/taskSliceReducer';
+import { useAppDispatch } from '@/store/store';
+import { TaskStatus } from '@/types/task';
 
 
 const HomePage: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
-
+    // const [tasks, setTasks] = useState<Task[]>([]);
+const dispatch = useAppDispatch();
     useEffect(() => {
-      const fetchTasks = async () => {
-        const data = await getTasks();
-        setTasks(data);
+      const fetchTasksInit = async () => {
+        // const data = await getTasks();
+        // setTasks(data);
+        await dispatch(fetchTasks(TaskStatus.TODO))
+        await dispatch(fetchTasks(TaskStatus.IN_PROGRESS))
+        await dispatch(fetchTasks(TaskStatus.DONE))
+
       };
-      fetchTasks();
+      fetchTasksInit();
     }, []);
   
     
     return (
       <div>
         <h2>Your Tasks</h2>
-        <TaskList tasks={tasks}  />
+        <TaskList/>
       </div>
     );
 };

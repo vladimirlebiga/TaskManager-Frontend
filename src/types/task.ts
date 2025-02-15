@@ -19,3 +19,14 @@ export interface Task {
     status: TaskStatus;
   }
 
+  export interface TaskUpdate {
+    title?: string;
+    description?: string;
+    status?: TaskStatus;
+  }
+
+  
+
+  export type DeleteTask = Record<string, string>;
+
+
