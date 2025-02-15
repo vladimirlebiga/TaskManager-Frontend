@@ -98,23 +98,6 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    moveTask: (
-      state,
-      action: PayloadAction<{ taskId: string; from: ColumnKey; to: ColumnKey }>
-    ) => {
-      const { taskId, from, to } = action.payload;
-      const idNum = parseInt(taskId, 10);
-      const task = state[from].tasks[idNum];
-      if (!task) return;
-      
-      // Remove the task from the source column
-      state[from].tasksID = state[from].tasksID.filter((id) => id !== idNum);
-      delete state[from].tasks[idNum];
-      
-      // Add the task to the destination column
-      state[to].tasksID.push(idNum);
-      state[to].tasks[idNum] = task;
-    },    
     
   },
 
@@ -127,7 +110,7 @@ const tasksSlice = createSlice({
       .addCase(fetchTasks.fulfilled, (state, action: PayloadAction<TaskPayload>) => {
         state.loading = false;
 
-        const statusKey = action.payload.status as keyof TasksState;
+        const statusKey = action.payload.status as ColumnKey;
        if (!state[statusKey]) return; // Prevent errors if status is invalid
 
        state[statusKey].tasksID = action.payload.tasks.map(({ id }) => id);
@@ -147,7 +130,7 @@ const tasksSlice = createSlice({
       .addCase(fetchDeleteTask.fulfilled, (state, action: PayloadAction<DeleteTask>) => {
         state.loading = false;
       
-        const statusKey = action.payload.status as keyof TasksState;
+        const statusKey = action.payload.status as ColumnKey;
         if (!state[statusKey]) return;
       
         state[statusKey].tasksID = state[statusKey].tasksID.filter(
@@ -170,7 +153,7 @@ const tasksSlice = createSlice({
         state.loading = false;
         state.id = action.payload.id;
 
-        const statusKey = action.payload.status as keyof TasksState; // Ensure the correct status
+        const statusKey = action.payload.status as ColumnKey; // Ensure the correct status
         if (!state[statusKey]) return; // Prevent invalid status errors
 
         state[statusKey].tasks[action.payload.id] = action.payload; // Add/Update task in the appropriate status
@@ -189,7 +172,7 @@ const tasksSlice = createSlice({
       .addCase(fetchUpdateTask.fulfilled, (state, action: PayloadAction<Task>) => {
         state.loading = false;
 
-        const statusKey = action.payload.status as string ; // Ensure the correct status
+        const statusKey = action.payload.status as ColumnKey ; // Ensure the correct status
         console.log(statusKey, 1111)
 
         if (!state[statusKey]) return; // Prevent invalid status errors
@@ -221,5 +204,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { moveTask } = tasksSlice.actions;
+
 export default tasksSlice.reducer;
